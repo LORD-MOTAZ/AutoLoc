@@ -18,6 +18,7 @@ public class ContratServiceImpl implements IContratService {
             throw new IllegalArgumentException(
                     "Un nouveau contrat ne doit pas avoir d'identifiant");
         }
+        validerMontant(contrat);
         return contratRepository.save(contrat);
     }
     @Override
@@ -34,8 +35,11 @@ public class ContratServiceImpl implements IContratService {
     }
     @Override
     public Contrat update(Long id, Contrat contrat) {
+        validerMontant(contrat);
         Contrat existant = findById(id);
         existant.setMontantTotal(contrat.getMontantTotal());
+        existant.setDateSignature(contrat.getDateSignature());
+        existant.setValide(contrat.getValide());
 // recopier ici les autres attributs modifiables du contrat (Atelier 2),
 // sans toucher à l'identifiant ni à la collection de paiements
         return contratRepository.save(existant);
@@ -46,5 +50,13 @@ public class ContratServiceImpl implements IContratService {
             throw new ResourceNotFoundException("Contrat", id);
         }
         contratRepository.deleteById(id);
+    }
+
+    // ---- règle de gestion ----
+    private void validerMontant(Contrat contrat) {
+        if (contrat.getMontantTotal() != null && contrat.getMontantTotal() < 0) {
+            throw new IllegalArgumentException(
+                    "Le montant total du contrat ne peut pas être négatif.");
+        }
     }
 }
