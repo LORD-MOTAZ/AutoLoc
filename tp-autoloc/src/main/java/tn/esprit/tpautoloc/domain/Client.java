@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,5 +27,6 @@ public class Client {
 
     // Étape 3 : Relation OneToMany avec Reservation
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Reservation> reservations;
 }

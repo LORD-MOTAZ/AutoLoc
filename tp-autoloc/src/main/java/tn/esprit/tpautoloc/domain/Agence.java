@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,9 +25,12 @@ public class Agence {
 
     // Étape 1 : Relation OneToMany avec Employe
     @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Employe> employes;
 
     // Étape 1 : Relation OneToMany avec Vehicule
     @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL)
+    @JsonIgnore
+
     private List<Vehicule> vehicules;
 }

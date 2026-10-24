@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class Employe {
 
     // Étape 1 : Relation ManyToOne avec Agence
     @ManyToOne
+    @JsonIgnore
     private Agence agence;
 }

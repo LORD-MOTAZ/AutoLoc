@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,5 +26,6 @@ public class Paiement {
 
     // Étape 6 : Relation inverse ManyToOne avec Contrat
     @ManyToOne
+    @JsonIgnore
     private Contrat contrat;
 }

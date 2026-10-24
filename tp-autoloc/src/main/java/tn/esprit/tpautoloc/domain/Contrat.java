@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,5 +28,6 @@ public class Contrat {
 
     // Étape 5 : Relation OneToMany avec Paiement
     @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Paiement> paiements;
 }

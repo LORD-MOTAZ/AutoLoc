@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,5 +24,7 @@ public class Maintenance {
 
     // Étape 7 : Relation ManyToOne avec Vehicule
     @ManyToOne
+    @JsonIgnore
     private Vehicule vehicule;
+
 }

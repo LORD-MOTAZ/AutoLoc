@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,6 @@ public class Equipement {
 
     // Étape 8 : Relation inverse ManyToMany avec Vehicule
     @ManyToMany(mappedBy = "equipements")
+    @JsonIgnore
     private List<Vehicule> vehicules;
 }
