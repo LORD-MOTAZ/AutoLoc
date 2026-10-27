@@ -26,15 +26,14 @@ public class Reservation {
 
     // Étape 4 : Relation ManyToOne avec Client
     @ManyToOne
-    @JsonIgnore
     private Client client;
 
     // Étape 4 : Relation ManyToOne avec Vehicule
     @ManyToOne
-    @JsonIgnore
     private Vehicule vehicule;
 
     // Étape 4 : Relation OneToOne avec Contrat
     @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Contrat contrat;
 }

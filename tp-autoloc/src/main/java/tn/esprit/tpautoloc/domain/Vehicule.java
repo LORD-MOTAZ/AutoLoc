@@ -32,7 +32,6 @@ public class Vehicule {
 
     // Étape 2 : Relation ManyToOne avec Agence
     @ManyToOne
-    @JsonIgnore
     private Agence agence;
 
     // Étape 2 : Relation OneToMany avec Reservation

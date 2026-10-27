@@ -1,6 +1,8 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import java.util.*;
 public class Contrat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias("id")
     private Long idContrat;
     private LocalDate dateSignature;
     private Double montantTotal;
@@ -26,8 +29,12 @@ public class Contrat {
     @OneToOne
     private Reservation reservation;
 
-    // Étape 5 : Relation OneToMany avec Paiement
-    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Paiement> paiements;
+    // Étape 5 : Relation OneToMany avec Paiement (Composition)
+    @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("contrat-paiements")
+    private List<Paiement> paiements = new ArrayList<>();
+
+    public Long getId() {
+        return idContrat;
+    }
 }

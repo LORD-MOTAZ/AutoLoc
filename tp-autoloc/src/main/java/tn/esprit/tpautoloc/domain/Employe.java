@@ -25,6 +25,5 @@ public class Employe {
 
     // Étape 1 : Relation ManyToOne avec Agence
     @ManyToOne
-    @JsonIgnore
     private Agence agence;
 }

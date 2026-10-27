@@ -24,7 +24,6 @@ public class Maintenance {
 
     // Étape 7 : Relation ManyToOne avec Vehicule
     @ManyToOne
-    @JsonIgnore
     private Vehicule vehicule;
 
 }
