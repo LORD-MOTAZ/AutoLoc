@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,7 +10,6 @@ import lombok.Setter;
 import tn.esprit.tpautoloc.domain.enums.StatutReservation;
 import java.time.LocalDate;
 
-
 @Entity
 @Getter
 @Setter
@@ -18,6 +18,7 @@ import java.time.LocalDate;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias("id")
     private Long idReservation;
     private LocalDate dateDebut;
     private LocalDate dateFin;
@@ -36,4 +37,8 @@ public class Reservation {
     @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
     @JsonIgnore
     private Contrat contrat;
+
+    public Long getId() {
+        return idReservation;
+    }
 }

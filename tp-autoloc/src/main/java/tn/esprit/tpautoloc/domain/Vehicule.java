@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.*;
 public class Vehicule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias("id")
     private Long idVehicule;
     private String immatriculation;
     private String marque;
@@ -52,4 +54,8 @@ public class Vehicule {
         inverseJoinColumns = @JoinColumn(name = "equipement_id")
     )
     private List<Equipement> equipements;
+
+    public Long getId() {
+        return idVehicule;
+    }
 }

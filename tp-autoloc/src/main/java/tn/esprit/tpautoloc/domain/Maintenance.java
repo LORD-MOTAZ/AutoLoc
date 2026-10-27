@@ -1,13 +1,13 @@
 package tn.esprit.tpautoloc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
-
 
 @Entity
 @Getter
@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class Maintenance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias("id")
     private Long idMaintenance;
     private LocalDate dateDebut;
     private LocalDate dateFin;
@@ -26,4 +27,7 @@ public class Maintenance {
     @ManyToOne
     private Vehicule vehicule;
 
+    public Long getId() {
+        return idMaintenance;
+    }
 }

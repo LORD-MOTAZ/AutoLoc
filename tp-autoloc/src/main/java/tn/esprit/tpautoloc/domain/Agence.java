@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.*;
 public class Agence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias("id")
     private Long idAgence;
     private String nom;
     private String ville;
@@ -31,6 +33,9 @@ public class Agence {
     // Étape 1 : Relation OneToMany avec Vehicule
     @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL)
     @JsonIgnore
-
     private List<Vehicule> vehicules;
+
+    public Long getId() {
+        return idAgence;
+    }
 }

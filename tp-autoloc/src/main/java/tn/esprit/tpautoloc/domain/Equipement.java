@@ -1,5 +1,6 @@
 package tn.esprit.tpautoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.*;
 public class Equipement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonAlias("id")
     private Long idEquipement;
     private String libelle;
 
@@ -23,4 +25,8 @@ public class Equipement {
     @ManyToMany(mappedBy = "equipements")
     @JsonIgnore
     private List<Vehicule> vehicules;
+
+    public Long getId() {
+        return idEquipement;
+    }
 }
