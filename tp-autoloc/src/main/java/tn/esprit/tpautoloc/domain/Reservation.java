@@ -34,7 +34,7 @@ public class Reservation {
     private Vehicule vehicule;
 
     // Étape 4 : Relation OneToOne avec Contrat
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "reservation")
     @JsonIgnore
     private Contrat contrat;
 

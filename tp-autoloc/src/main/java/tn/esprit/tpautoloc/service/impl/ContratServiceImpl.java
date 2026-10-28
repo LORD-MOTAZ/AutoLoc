@@ -3,7 +3,9 @@ package tn.esprit.tpautoloc.service.impl;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.tpautoloc.domain.Contrat;
+import tn.esprit.tpautoloc.domain.Reservation;
 import tn.esprit.tpautoloc.exception.ResourceNotFoundException;
 import tn.esprit.tpautoloc.repository.IContratRepository;
 import tn.esprit.tpautoloc.service.IContratService;
@@ -11,7 +13,9 @@ import tn.esprit.tpautoloc.service.IContratService;
 @Service
 @RequiredArgsConstructor
 public class ContratServiceImpl implements IContratService {
+
     private final IContratRepository contratRepository;
+
     @Override
     public Contrat create(Contrat contrat) {
         if (contrat.getIdContrat() != null) {
@@ -21,18 +25,18 @@ public class ContratServiceImpl implements IContratService {
         validerMontant(contrat);
         return contratRepository.save(contrat);
     }
+
     @Override
     public Contrat findById(Long id) {
         return contratRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contrat", id));
     }
+
     @Override
     public List<Contrat> findAll() {
-
-
-
         return contratRepository.findAll();
     }
+
     @Override
     public Contrat update(Long id, Contrat contrat) {
         validerMontant(contrat);
@@ -40,19 +44,20 @@ public class ContratServiceImpl implements IContratService {
         existant.setMontantTotal(contrat.getMontantTotal());
         existant.setDateSignature(contrat.getDateSignature());
         existant.setValide(contrat.getValide());
-// recopier ici les autres attributs modifiables du contrat (Atelier 2),
-// sans toucher à l'identifiant ni à la collection de paiements
         return contratRepository.save(existant);
     }
+
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        if (!contratRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Contrat", id);
+        Contrat contrat = findById(id);            // 404 si absent
+        Reservation reservation = contrat.getReservation();
+        if (reservation != null) {
+            reservation.setContrat(null);          // détache le lien côté Reservation
         }
-        contratRepository.deleteById(id);
+        contratRepository.delete(contrat);         // supprime aussi les paiements (cascade)
     }
 
-    // ---- règle de gestion ----
     private void validerMontant(Contrat contrat) {
         if (contrat.getMontantTotal() != null && contrat.getMontantTotal() < 0) {
             throw new IllegalArgumentException(
